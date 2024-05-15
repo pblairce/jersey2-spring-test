@@ -4,15 +4,15 @@ import nl.bstoi.jersey2springexample.service.SomeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Date;
+
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-/**
- * Hylke Stapersma (codecentric nl)
- * hylke.stapersma@codecentric.nl
- */
 @Component // Required for using Spring and Jersey2
 @Path("someaction")
 public class SomeResource {
@@ -25,7 +25,14 @@ public class SomeResource {
     public Response doSomething(){
         LOG.debug("SomeResource was called");
         getSomeService().doSomething();
-        return Response.status(Response.Status.NO_CONTENT).build();
+        return Response.ok("Hello from status").build();
+    }
+
+    @GET
+    @Path("/date")
+    public Response date(@BeanParam QueryParams queryParams) {
+        LOG.debug("SomeResource - date was called with " + queryParams);
+        return Response.ok("SomeResource - date was called with " + queryParams).build();
     }
 
     public SomeService getSomeService() {
